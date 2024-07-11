@@ -52,6 +52,7 @@ Before running the script, ensure you have the following:
 
 - Python (3.7) installed on your system.
 - All dependencies installed. This project uses poetry as dependency management.
+- Use "poetry install" to create a venv and install all dependencies.
 
 ## Usage
 
