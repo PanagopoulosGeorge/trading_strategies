@@ -3,7 +3,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 class MeanReversion:
-    def __init__(self, file_path, file_name, feature='Close', window=50):
+    def __init__(self, file_path, file_name, feature='Close', window=50, symbol = "AAPL"):
+        self.symbol = symbol
         self.data = pd.read_csv(os.path.join(file_path, file_name), index_col=0)
         self.data.index = pd.to_datetime(self.data.index)
         self.feature = feature
@@ -31,7 +32,7 @@ class MeanReversion:
         plt.plot(self.data[f'SMA{self.window}_upper'], label=f'SMA{self.window}_upper', color='blue')
         plt.plot(self.data[f'SMA{self.window}_lower'], label=f'SMA{self.window}_lower', color='blue')
         
-        plt.title('SMA Signals')
+        plt.title(f'SMA Signals for {self.symbol}')
         plt.legend()
         plt.show()
         

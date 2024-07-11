@@ -10,7 +10,7 @@ REQUIRED_ARGS = 4
 ## Strategy to be applied
 # tf: Trend Following
 # mr: Mean Reversion (Bollinger Bands)
-STRATEGY = 'tf'
+STRATEGY = 'mr'
 
 ## Trend Following Strategy
 SIGNAL = 'SMA'
@@ -18,4 +18,5 @@ SHORT_WINDOW=50
 LONG_WINDOW=200
 
 # Mean Reversion Strategy (Bollinger Bands - BB)
-BB_SHORT_WINDOW = 30
+BB_SHORT_WINDOW = 100
+N_STD = 1.5

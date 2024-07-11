@@ -3,7 +3,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 class TrendFollowing:
-    def __init__(self, file_path, file_name, feature='Close', signal='SMA', short_window=50, long_window=200):
+    def __init__(self, file_path, file_name, feature='Close', signal='SMA', short_window=50, long_window=200, symbol = None):
+        self.symbol = symbol
         self.data = pd.read_csv(os.path.join(file_path, file_name), index_col=0)
         self.data.index = pd.to_datetime(self.data.index)
         self.feature = feature
@@ -56,6 +57,6 @@ class TrendFollowing:
                  self.data[f'{self.signal}{self.short_window}'][self.data['Signal'] == -1],
                  '^', markersize=1, color='r', lw=0, label='Sell Signal')
         
-        plt.title(f'{self.signal} Signals')
+        plt.title(f'{self.signal} Signals for {self.symbol}')
         plt.legend()
         plt.show()

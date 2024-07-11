@@ -6,10 +6,12 @@ class Backtester:
 
     def __init__(
         self,
+        symbol: str = None,
         initial_capital: float = 10000.0,
         risk_free_rate: float = 0.04,
         **kwargs
     ):
+        self.symbol = symbol
         self.initial_capital = initial_capital
         self.capital = initial_capital
         self.portfolio = {} 
@@ -20,7 +22,7 @@ class Backtester:
     def print_summary(self):
         print(f"Final Portfolio Value: {self.get_final_portfolio_value()}")
         print(f"Total Return: {round(self.get_total_return_pct(), 2)} %")
-        print(f"{round(self.get_sharpe_ratio(), 2)}")
+        print(f"Sharpe ratio:\n{round(self.get_sharpe_ratio(), 2)}")
         print(f"Max Drawdown: {round(self.get_max_drawdown(),2)} %")
         
     def get_yearly_returns(self) -> pd.Series:
@@ -96,5 +98,5 @@ class Backtester:
         ax[1].set_title('Trading Signals')
         ax[1].set_ylabel('Signals')
         ax[1].set_xlabel('Date')
-        ax[1].legend()
+        ax[1].legend(title = f'Signals for {self.symbol}')
         plt.show()

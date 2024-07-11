@@ -4,7 +4,7 @@ from utils.strategies.backtesting.backtester import Backtester
 from dateutil.parser import parse
 import sys
 import os
-from settings import REQUIRED_ARGS, DATA_DIR, STRATEGY, SIGNAL, SHORT_WINDOW, LONG_WINDOW, BB_SHORT_WINDOW
+from settings import REQUIRED_ARGS, DATA_DIR, STRATEGY, SIGNAL, SHORT_WINDOW, LONG_WINDOW, BB_SHORT_WINDOW, N_STD
 
 def print_help():
     help = """
@@ -30,17 +30,17 @@ if __name__ == '__main__':
     backtest = False if sys.argv[4] != "backtest" else True
     file_prefix = f"{symbol}_{sys.argv[2]}_{sys.argv[3]}"
     if STRATEGY=="tf":
-        strategy = TrendFollowing(DATA_DIR, f"{file_prefix}_processed.csv", feature='Close', short_window=SHORT_WINDOW, long_window=LONG_WINDOW)
+        strategy = TrendFollowing(DATA_DIR, f"{file_prefix}_processed.csv", feature='Close',symbol = symbol, short_window=SHORT_WINDOW, long_window=LONG_WINDOW)
         signals_df = strategy.generate_signals()
         strategy.save_signals(os.path.join(DATA_DIR, f"{file_prefix}_strategy.csv"))
         strategy.visualise_signals()
     elif STRATEGY=="mr":
-        strategy = MeanReversion(DATA_DIR, f"{file_prefix}_processed.csv", feature='Close', window=BB_SHORT_WINDOW)
-        signals_df = strategy.generate_signals(n_std=1.8)
+        strategy = MeanReversion(DATA_DIR, f"{file_prefix}_processed.csv", symbol = symbol, feature='Close', window=BB_SHORT_WINDOW)
+        signals_df = strategy.generate_signals(n_std=N_STD)
         strategy.save_signals(os.path.join(DATA_DIR, f"{file_prefix}_strategy.csv"))
         strategy.visualise_signals()
     if backtest:
-        backtester = Backtester(initial_capital=10000.0, risk_free_rate=0.04)
+        backtester = Backtester(symbol=symbol, initial_capital=10000.0, risk_free_rate=0.04)
         backtester.backtest_strategy_single_asset(symbol, signals_df['Signal'], signals_df['Close'])
         backtester.print_summary()
         backtester.visualise_backtesting()

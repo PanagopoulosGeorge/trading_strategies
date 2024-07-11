@@ -7,7 +7,7 @@ from settings import DATA_DIR, DATA_AGGREGATION, NORMALIZE_FEATURE_YN
 REQUIRED_ARGS = 4
 
 def print_help():
-    print("\nfetch_symbol.py: Fetch stock data and preprocess it for backtesting.")
+    print("\nfetch_symbol.py: Fetch stock data and preprocess it for backtesting. Saves data in data/ directory.")
     
     help = """
         Usage: (poetry run) python fetch_symbol.py <symbol> <start_date> <end_date>
